@@ -24,6 +24,32 @@ test('initial condition', () => {
   expect(checkbox).not.toBeChecked()
 })
 
+// checkbox determine enable state of the btn 
+// if checked btn is disabled
+// if not checked btn is enabled
+// test if after click change btn behavior
+
+test('btn has opposite behavior of checkbox', () => {
+  render(<App />)
+  const colorButton = screen.getByRole('button', { name: /change/i })
+  const checkbox = screen.getByRole('checkbox')
+
+  //event click
+  fireEvent.click(checkbox)
+
+  //after click checkbox
+  expect(checkbox).toBeChecked()
+  expect(colorButton).not.toBeEnabled()
+
+  //event click 
+  fireEvent.click(checkbox)
+
+  //return initial state
+  expect(checkbox).not.toBeChecked()
+  expect(colorButton).toBeEnabled()
+
+})
+
 
 
 
