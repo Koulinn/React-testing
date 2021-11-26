@@ -13,9 +13,10 @@ test('btn has correct initial color', () => {
   fireEvent.click(colorButton)
 
   expect(colorButton).toHaveStyle({ backgroundColor: secColor })
-  expect(colorButton.textContent).toBe('Change to ' + primaryColor)
+  expect(colorButton).toHaveTextContent('Change to ' + primaryColor)
 
-})
+}
+)
 
 test('initial condition', () => {
   render(<App />)
@@ -41,7 +42,7 @@ test('btn has opposite behavior of checkbox', () => {
 
   //after click checkbox
   expect(checkbox).toBeChecked()
-  expect(colorButton).not.toBeEnabled()
+  expect(colorButton).toBeDisabled()
 
   //event click 
   fireEvent.click(checkbox)
