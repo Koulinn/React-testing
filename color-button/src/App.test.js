@@ -50,6 +50,32 @@ test('btn has opposite behavior of checkbox', () => {
 
 })
 
+test('button is grey when disabled', () => {
+  render(<App />)
+  const colorButton = screen.getByRole('button', { name: /change/i })
+  const checkbox = screen.getByRole('checkbox', { name: 'Disable button' })
+
+  //initial state
+  expect(colorButton).toHaveStyle({ backgroundColor: 'red' })
+
+  // change to blue
+  fireEvent.click(colorButton)
+  expect(colorButton).toHaveStyle({ backgroundColor: 'blue' })
+
+  // disabled
+  fireEvent.click(checkbox)
+  expect(colorButton).toHaveStyle({ backgroundColor: 'grey' })
+
+  //enable again with previous color
+  fireEvent.click(checkbox)
+  expect(colorButton).toHaveStyle({ backgroundColor: 'blue' })
+
+  // change to red
+  fireEvent.click(colorButton)
+  expect(colorButton).toHaveStyle({ backgroundColor: 'red' })
+
+})
+
 
 
 
