@@ -1,6 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
+import { primaryColor, secColor } from "./App.test";
 
 export const replaceCamelWithSpace = (CamelCaseColor) => {
   //regex => multiple times capital letter in the middle
@@ -9,9 +10,9 @@ export const replaceCamelWithSpace = (CamelCaseColor) => {
 }
 
 function App() {
-  const [buttonColor, setButtonColor] = useState("red");
+  const [buttonColor, setButtonColor] = useState(primaryColor);
   const [isChecked, setIsChecked] = useState(false);
-  const newButtonColor = buttonColor === "red" ? "blue" : "red";
+  const newButtonColor = buttonColor === primaryColor ? secColor : primaryColor;
   return (
     <div>
       <button

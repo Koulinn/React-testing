@@ -1,24 +1,26 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App, { replaceCamelWithSpace } from './App';
 
+export const primaryColor = 'MediumVioletRed'
+export const secColor = 'MidnightBlue'
 
 
 test('btn has correct initial color', () => {
   render(<App />)
-  const colorButton = screen.getByRole('button', { name: 'Change to blue' });
+  const colorButton = screen.getByRole('button', { name: 'Change to ' + secColor });
 
-  expect(colorButton).toHaveStyle({ backgroundColor: 'red' })
+  expect(colorButton).toHaveStyle({ backgroundColor: primaryColor })
   fireEvent.click(colorButton)
 
-  expect(colorButton).toHaveStyle({ backgroundColor: 'blue' })
-  expect(colorButton.textContent).toBe('Change to red')
+  expect(colorButton).toHaveStyle({ backgroundColor: secColor })
+  expect(colorButton.textContent).toBe('Change to ' + primaryColor)
 
 })
 
 test('initial condition', () => {
   render(<App />)
 
-  const colorButton = screen.getByRole('button', { name: 'Change to blue' })
+  const colorButton = screen.getByRole('button', { name: 'Change to ' + secColor })
   expect(colorButton).toBeEnabled()
   const checkbox = screen.getByRole('checkbox')
   expect(checkbox).not.toBeChecked()
@@ -56,11 +58,11 @@ test('button is grey when disabled', () => {
   const checkbox = screen.getByRole('checkbox', { name: 'Disable button' })
 
   //initial state
-  expect(colorButton).toHaveStyle({ backgroundColor: 'red' })
+  expect(colorButton).toHaveStyle({ backgroundColor: primaryColor })
 
   // change to blue
   fireEvent.click(colorButton)
-  expect(colorButton).toHaveStyle({ backgroundColor: 'blue' })
+  expect(colorButton).toHaveStyle({ backgroundColor: secColor })
 
   // disabled
   fireEvent.click(checkbox)
@@ -68,11 +70,11 @@ test('button is grey when disabled', () => {
 
   //enable again with previous color
   fireEvent.click(checkbox)
-  expect(colorButton).toHaveStyle({ backgroundColor: 'blue' })
+  expect(colorButton).toHaveStyle({ backgroundColor: secColor })
 
   // change to red
   fireEvent.click(colorButton)
-  expect(colorButton).toHaveStyle({ backgroundColor: 'red' })
+  expect(colorButton).toHaveStyle({ backgroundColor: primaryColor })
 
 })
 
@@ -91,7 +93,11 @@ describe('spaces before camel-case capital letters', () => {
 })
 
 
+/* specs
+color change from MediumVioletRed to MidnightBlue
 
+
+*/
 
 
 
