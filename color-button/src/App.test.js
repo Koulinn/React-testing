@@ -15,6 +15,15 @@ test('btn has correct initial color', () => {
 
 })
 
+test('initial condition', () => {
+  render(<App />)
+
+  const colorButton = screen.getByRole('button', { name: 'Change to blue' })
+  expect(colorButton).toBeEnabled()
+  const checkbox = screen.getByRole('checkbox')
+  expect(checkbox).not.toBeChecked()
+})
+
 
 
 
