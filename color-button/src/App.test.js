@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import App from './App';
+import App, { replaceCamelWithSpace } from './App';
 
 
 
@@ -76,6 +76,19 @@ test('button is grey when disabled', () => {
 
 })
 
+//describe group tests
+
+describe('spaces before camel-case capital letters', () => {
+  test('Works for no inner capital letters', () => {
+    expect(replaceCamelWithSpace('Red')).toBe('Red')
+  })
+  test('Works for one inner capital letters', () => {
+    expect(replaceCamelWithSpace('MidnightBlue')).toBe('Midnight Blue')
+  })
+  test('Works for multiples inner capital letters', () => {
+    expect(replaceCamelWithSpace('MediumVioletRed')).toBe('Medium Violet Red')
+  })
+})
 
 
 

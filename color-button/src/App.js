@@ -2,6 +2,12 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 
+export const replaceCamelWithSpace = (CamelCaseColor) => {
+  //regex => multiple times capital letter in the middle
+  return CamelCaseColor.replace(/\B([A-Z])\B/g, ' $1')
+
+}
+
 function App() {
   const [buttonColor, setButtonColor] = useState("red");
   const [isChecked, setIsChecked] = useState(false);
