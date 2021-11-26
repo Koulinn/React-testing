@@ -32,7 +32,7 @@ test('initial condition', () => {
 test('btn has opposite behavior of checkbox', () => {
   render(<App />)
   const colorButton = screen.getByRole('button', { name: /change/i })
-  const checkbox = screen.getByRole('checkbox')
+  const checkbox = screen.getByRole('checkbox', { name: 'Disable button' })
 
   //event click
   fireEvent.click(checkbox)

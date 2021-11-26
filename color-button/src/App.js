@@ -15,7 +15,15 @@ function App() {
       >
         Change to {newButtonColor}
       </button>
-      <input type="checkbox" defaultChecked={isChecked} onClick={() => setIsChecked(!isChecked)} />
+      <input
+        type="checkbox"
+        id="control-btn-state"
+
+        aria-checked={isChecked}
+        defaultChecked={isChecked}
+        onClick={() => setIsChecked(!isChecked)}
+      />
+      <label htmlFor="control-btn-state" >Disable button</label>
     </div>
   );
 }
