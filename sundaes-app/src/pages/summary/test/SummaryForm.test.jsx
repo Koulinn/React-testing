@@ -2,12 +2,6 @@ import { render, screen, waitForElementToBeRemoved } from '@testing-library/reac
 import SummaryForm, { checkboxInnerText, buttonInnerText, popOverInnerText, termsConditionsText } from '../SummaryForm';
 import userEvent from '@testing-library/user-event'
 
-/*
-===== Tests =====
-checkbox default -> unchecked
-checkbox is checked and button is enabled
-unchecking disables btn
-*/
 
 describe('test SummaryForm component', () => {
 
@@ -52,7 +46,7 @@ describe('test SummaryForm component', () => {
         const popover = screen.getByText(popOverInnerText)
         expect(popover).toBeInTheDocument()
         //disappears when mouse out
-        // popover disappears asynchronously this 
+        // popover disappears asynchronously this will await for the event, it it's empty or null will throw error
         userEvent.unhover(termsAndConditions)
         await waitForElementToBeRemoved(() => screen.queryByText(popOverInnerText))
     })
