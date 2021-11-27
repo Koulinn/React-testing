@@ -24,3 +24,24 @@ Test behavior like the disabled and color
 ESLint
 Linter is anaylise static text and marks syntax that break rules
 Static: code written (not logic, or when is run)
+
+Screen query methods
+command[ALL]By[QueryType]
+
+command
+get (expect to be in the DOM)
+query (not expect to be in the DOM)
+find (element async )
+
+ALL
+exclude, only one match
+include, more than one match
+
+QueryType
+Role
+AltText
+Text
+Form elements
+PlaceHolderText
+LabelText
+DisplayValue

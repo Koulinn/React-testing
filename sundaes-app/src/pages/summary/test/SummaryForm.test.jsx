@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import SummaryForm, { checkboxInnerText, buttonInnerText } from '../SummaryForm';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import SummaryForm, { checkboxInnerText, buttonInnerText, popOverInnerText, termsConditionsText } from '../SummaryForm';
 import userEvent from '@testing-library/user-event'
 
 /*
@@ -37,6 +37,24 @@ describe('test SummaryForm component', () => {
         userEvent.click(checkbox)
         expect(checkbox).not.toBeChecked()
         expect(button).toBeDisabled()
+    })
+
+    test('popover responds to hover', async () => {
+        render(<SummaryForm />)
+        //starts d-none
+        const nullPopover = screen.queryByText(popOverInnerText)
+        expect(nullPopover).not.toBeInTheDocument()
+
+        //appear on mouse hover
+        const termsAndConditions = screen.getByText(termsConditionsText)
+        userEvent.hover(termsAndConditions)
+
+        const popover = screen.getByText(popOverInnerText)
+        expect(popover).toBeInTheDocument()
+        //disappears when mouse out
+        // popover disappears asynchronously this 
+        userEvent.unhover(termsAndConditions)
+        await waitForElementToBeRemoved(() => screen.queryByText(popOverInnerText))
     })
 
 })
