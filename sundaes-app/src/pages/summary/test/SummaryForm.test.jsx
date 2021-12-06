@@ -3,9 +3,8 @@ import {
   screen,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-
-import userEvent from '@testing-library/user-event';
 import SummaryForm from '../SummaryForm';
+import userEvent from '@testing-library/user-event';
 
 test('Initial conditions', () => {
   render(<SummaryForm />);
