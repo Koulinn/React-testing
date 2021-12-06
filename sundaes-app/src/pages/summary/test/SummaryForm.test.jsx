@@ -1,54 +1,47 @@
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
-import SummaryForm, { checkboxInnerText, buttonInnerText, popOverInnerText, termsConditionsText } from '../SummaryForm';
-import userEvent from '@testing-library/user-event'
+import { render, screen, waitForElementToBeRemoved } from "@testing-library/react";
+import SummaryForm from "../SummaryForm";
+import userEvent from "@testing-library/user-event";
 
+test("Initial conditions", () => {
+    render(<SummaryForm />);
+    const checkbox = screen.getByRole("checkbox", {
+        name: /terms and conditions/i,
+    });
+    expect(checkbox).not.toBeChecked();
 
-describe('test SummaryForm component', () => {
+    const confirmButton = screen.getByRole("button", { name: /confirm order/i });
+    expect(confirmButton).toBeDisabled();
+});
 
-    test('should checkbox be unchecked by default', () => {
-        render(<SummaryForm />)
-        const checkbox = screen.getByRole('checkbox', { name: checkboxInnerText })
+test("Checkbox enables button on first click and disables on second click", () => {
+    render(<SummaryForm />);
+    const checkbox = screen.getByRole("checkbox", {
+        name: /terms and conditions/i,
+    });
+    const confirmButton = screen.getByRole("button", { name: /confirm order/i });
 
-        expect(checkbox).not.toBeChecked()
+    userEvent.click(checkbox);
+    expect(confirmButton).toBeEnabled();
 
-    })
+    userEvent.click(checkbox);
+    expect(confirmButton).toBeDisabled();
+});
 
-    test('should button be disabled on checkbox unchecked', () => {
-        render(<SummaryForm />)
+test("popover responds to hover", async () => {
+    render(<SummaryForm />);
 
-        const button = screen.getByRole('button', { name: buttonInnerText })
-        expect(button).toBeDisabled()
+    // popover starts out hidden
+    const nullPopover = screen.queryByText(/no ice cream will actually be delivered/i);
+    expect(nullPopover).not.toBeInTheDocument();
 
-    })
-    test('should button be enabled on checkbox checked and then change after second click', () => {
-        render(<SummaryForm />)
-        const checkbox = screen.getByRole('checkbox', { name: checkboxInnerText })
-        const button = screen.getByRole('button', { name: buttonInnerText })
-        userEvent.click(checkbox)
-        expect(checkbox).toBeChecked()
-        expect(button).toBeEnabled()
+    // popover appears upon mouseover of checkbox label
+    const termsAndConditions = screen.getByText(/terms and conditions/i);
+    userEvent.hover(termsAndConditions);
 
-        userEvent.click(checkbox)
-        expect(checkbox).not.toBeChecked()
-        expect(button).toBeDisabled()
-    })
+    const popover = screen.getByText(/no ice cream will actually be delivered/i);
+    expect(popover).toBeInTheDocument();
 
-    test('popover responds to hover', async () => {
-        render(<SummaryForm />)
-        //starts d-none
-        const nullPopover = screen.queryByText(popOverInnerText)
-        expect(nullPopover).not.toBeInTheDocument()
-
-        //appear on mouse hover
-        const termsAndConditions = screen.getByText(termsConditionsText)
-        userEvent.hover(termsAndConditions)
-
-        const popover = screen.getByText(popOverInnerText)
-        expect(popover).toBeInTheDocument()
-        //disappears when mouse out
-        // popover disappears asynchronously this will await for the event, it it's empty or null will throw error
-        userEvent.unhover(termsAndConditions)
-        await waitForElementToBeRemoved(() => screen.queryByText(popOverInnerText))
-    })
-
-})
+    // popover disappears when we mouse out
+    userEvent.unhover(termsAndConditions);
+    await waitForElementToBeRemoved(() => screen.queryByText(/no ice cream will actually be delivered/i));
+});
