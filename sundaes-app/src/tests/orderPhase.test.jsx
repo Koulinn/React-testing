@@ -112,3 +112,5 @@ test("loading message before ", async () => {
     // when expecting not to be in document
     expect(screen.queryByText("Loading")).not.toBeInTheDocument();
 });
+
+test("do not show toppings on summary if they are not selected", async () => {});
