@@ -113,4 +113,25 @@ test("loading message before ", async () => {
     expect(screen.queryByText("Loading")).not.toBeInTheDocument();
 });
 
-test("do not show toppings on summary if they are not selected", async () => {});
+test("do not show toppings on summary if they are not selected", async () => {
+    render(<App />);
+    const vanillaInput = await screen.findByRole("spinbutton", {
+        name: "Vanilla",
+    });
+
+    const scoopsSubtotal = screen.getByText("Scoops total: $", { exact: false });
+    userEvent.clear(vanillaInput);
+    userEvent.type(vanillaInput, "1");
+    expect(scoopsSubtotal).toHaveTextContent("2.00");
+
+    //find and click order button
+
+    const orderBtn = screen.getByRole("button", { name: "Order Sundae!" });
+    userEvent.click(orderBtn);
+
+    //check summary info based on order
+    const summaryScoops = await screen.findByRole("heading", { name: /^Scoops:/ });
+    expect(summaryScoops).toHaveTextContent("2.00");
+    const summaryToppings = await screen.queryByText(/^Toppings:/);
+    expect(summaryToppings).not.toBeInTheDocument();
+});
