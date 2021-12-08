@@ -2,7 +2,6 @@ import { render, screen, waitFor } from "../../../test-utils/testing-library-uti
 import OrderEntry from "../OrderEntry";
 import { rest } from "msw";
 import { server } from "../../../mocks/server";
-import { useOrderDetails } from "../../../contexts/OrderDetails";
 import userEvent from "@testing-library/user-event";
 
 test("handles error for scoops and toppings routes", async () => {
